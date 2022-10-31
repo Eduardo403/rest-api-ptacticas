@@ -17,6 +17,7 @@ export const getEmployeeById = async (req, res) => {
     const [rows] = await pool.query("select * from emplodee where id=?", [
       req.params.id,
     ]);
+    res.header("Access-Control-Allow-Origin", "*");
 
     if (rows.length <= 0) {
       res.status(404).json({
@@ -40,6 +41,8 @@ export const postEmployees = async (req, res) => {
       "insert into emplodee (users,salari)  value (?,?)",
       [users, salary]
     );
+    res.header("Access-Control-Allow-Origin", "*");
+
     res.send({
       id: rows.insertId,
       users,
@@ -58,6 +61,8 @@ export const deleteEmployees = async (req, res) => {
     const [result] = await pool.query("delete  from emplodee where id=?", [
       req.params.id,
     ]);
+    res.header("Access-Control-Allow-Origin", "*");
+
     if (result.affectedRows <= 0) {
       res.status(404).json({
         massage: "Emplodeey not found",
@@ -77,6 +82,8 @@ export const putEmployees = async (req, res) => {
   const { id } = req.params;
   const { users, salary } = req.body;
   try {
+    res.header("Access-Control-Allow-Origin", "*");
+
     const [result] = await pool.query(
       "update emplodee set users= ifnull(?,users) ,salari= ifnull(?,salari) where id = ?;",
       [users, salary, id]
