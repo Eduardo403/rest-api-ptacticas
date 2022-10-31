@@ -3,7 +3,7 @@ import { pool } from "../db.js";
 export const getEmployees = async (req, res) => {
   try {
     const [rows] = await pool.query("select * from emplodee");
-
+    res.header("Access-Control-Allow-Origin", "*");
     res.send(rows);
   } catch (error) {
     return res.status(500).json({
